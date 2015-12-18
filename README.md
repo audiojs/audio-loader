@@ -11,7 +11,7 @@ load({ snare: 'samples/snare.wav', kick: 'samples/kick.wav' }).then(loaded) {
 })
 ```
 
-Used by: [![smplr](https://img.shields.io/badge/instrument-smplr-yellow.svg)](https://github.com/danigb/smplr)
+Used by: [smplr](https://github.com/danigb/smplr)
 
 
 ## Features
@@ -37,10 +37,10 @@ var load = loader(ac, { /* options, not required */ })
 
 The options is an (optional) hash map with the following:
 
-- <HashMap> sources: (Optional) a hash map of audio sources (see below)
-- <Function> fetch: a function to retrieve data from urls
+- sources <HashMap>: a hash map of audio sources (see below)
+- fetch <Function>: a function to retrieve data from urls
 
-The returned `load` function receives only one parameter: the samples to load and returns always a Promise.
+The returned `load` function receives only one parameter (the samples to load) and __returns always a Promise__.
 
 #### Load audio files
 

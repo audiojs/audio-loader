@@ -6,13 +6,12 @@ var load = require('..')(ac)
 document.body.innerHTML = '<h2>audio-loader<h2><h1>Example</h1>(open the dev console)'
 
 run(loadSample, loadObject, loadMidijs, loadJSONInst, loadJSON, loadBase64,
-  loadSoundfont, loadDrumMachines)
+  loadSoundfont, loadDrumMachine)
 
 function playBuffer (buffer, when) {
-  console.log('Play buffer', when, buffer)
   var source = ac.createBufferSource()
   source.buffer = buffer
-  source.connect(ac.destinaton)
+  source.connect(ac.destination)
   source.start(when || ac.currentTime)
 }
 
@@ -41,7 +40,7 @@ function run () {
   }
   next()
 }
-function loadDrumMachines (done) {
+function loadDrumMachine (done) {
   load('@drum-machines/CR-78').then(function (maestro) {
     play('Maestro drum machine!', Object.keys(maestro.samples).reverse(), maestro.samples)
     done(6000)
