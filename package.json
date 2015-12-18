@@ -1,0 +1,34 @@
+{
+  "name": "audio-loader",
+  "version": "0.1.2",
+  "description": "A web audio sample loader",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm test && npm run docs && npm run dist",
+    "test": "mocha",
+    "docs": "documentation -f md > API.md",
+    "dist": "browserify index.js | uglifyjs > dist/audio-loader.min.js&& ls -hall dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danigb/smplr"
+  },
+  "keywords": [
+    "music",
+    "audio",
+    "sample",
+    "loader",
+    "webaudio",
+    "smplr"
+  ],
+  "author": "danigb <danigb@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danigb/smplr/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "sinon": "^1.17.2",
+    "web-audio-test-api": "^0.3.6"
+  }
+}
