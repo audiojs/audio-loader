@@ -1,9 +1,12 @@
 # audio-loader [![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 
+[![Build Status](https://travis-ci.org/danigb/audio-loader.svg?branch=master)](https://travis-ci.org/danigb/audio-loader) [![Code Climate](https://codeclimate.com/github/danigb/audio-loader/badges/gpa.svg)](https://codeclimate.com/github/danigb/audio-loader) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard) [![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
+
 An easy but powerfull audio buffer loader for browser:
 
 ```js
 var ac = new AudioContext()
+var load = require('audio-loader')
 
 // load one file
 load(ac, 'http://example.net/audio/file.mp3').then(function (buffer) {
@@ -41,7 +44,8 @@ The API is very simple: `load(ac, source, options)`
 
 The options accepts:
 
-- `fromUrl`: a prefix string or a function to convert file names to urls
+- __from__: a prefix string or function to expand file names to urls: `load(ac, 'file.mp3', { from: 'http://server.com/audio/'})` will load the file from `http://server.com/audio/file.mp3`
+- __only__: If loading an object, it will load only the given key values: `load(ac, { one: ..., two: ..., three: ... }, { only: ['one', 'three'] })` will not load `two`
 
 #### Load audio files
 
@@ -54,15 +58,15 @@ load(ac, 'http://path/to/file.mp3').then(function (buffer) {
   play(buffer)
 })
 
-// apply a prefix using options.fromUrl
-load(ac, ['snare.mp3', 'kick.mp3'], { fromUrl: 'http://server.com/audio/'}).then(function (buffers) {
+// apply a prefix using options.from
+load(ac, ['snare.mp3', 'kick.mp3'], { from: 'http://server.com/audio/'}).then(function (buffers) {
   // buffers is an array of AudioBuffers
   play(buffers[0])
 })
 
-// the options.fromUrl can be a function
+// the options.from can be a function
 function toUrl (name) { return 'http://server.com/samples' + name + '?key=secret' }
-load(ac, { snare: 'snare.mp3', kick: 'kick.mp3' }, { fromUrl: toUrl }).then(function (buffers) {
+load(ac, { snare: 'snare.mp3', kick: 'kick.mp3' }, { from: toUrl }).then(function (buffers) {
   // buffers is a hash of names to AudioBuffers
   play(buffers['snare'])
 })
@@ -87,7 +91,7 @@ You can load [midi.js](https://github.com/mudcube/MIDI.js) soundfont files, and 
 [pre-rendered sound fonts](https://github.com/gleitz/midi-js-soundfonts).
 
 ```js
-load('@soundfont/acoustic_grand_piano').then(function(buffers) {
+load(ac, '@soundfont/acoustic_grand_piano').then(function(buffers) {
   play(buffers['C2'])
 })
 ```

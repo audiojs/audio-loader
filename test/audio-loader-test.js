@@ -1,8 +1,8 @@
 /* global describe it */
 var fs = require('fs')
 var assert = require('assert')
-var load = require('..')
 var utils = require('./support/utils')
+var load = require('..')
 var ac = utils.audioContext
 var fetcher = utils.fetcher
 var pianoSF = fs.readFileSync(__dirname + '/support/piano.js').toString()
@@ -76,10 +76,20 @@ describe('audio-loader', function () {
         'server.com/file2.mp3': 'file2 audio data'
       })
       return load(ac, { one: 'file1.mp3', two: 'file2.mp3', total: 2 },
-        { from: 'server.com/' }).then(function (result) {
-          assert.deepEqual(result,
-            { total: 2, one: 'file1 audio data', two: 'file2 audio data' })
-        })
+      { from: 'server.com/' }).then(function (result) {
+        assert.deepEqual(result,
+          { total: 2, one: 'file1 audio data', two: 'file2 audio data' })
+      })
+    })
+    it('options.only', function () {
+      load.request = fetcher({
+        'server.com/file2.mp3': 'file2 audio data'
+      })
+      return load(ac, { one: 'file1.mp3', two: 'file2.mp3', total: 2 },
+      { from: 'server.com/', only: ['two'] }).then(function (result) {
+        assert.deepEqual(result,
+          { two: 'file2 audio data' })
+      })
     })
   })
   describe('Loads Audio in Base64 format', function () {
