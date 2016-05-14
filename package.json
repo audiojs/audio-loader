@@ -23,9 +23,10 @@
   "bugs": {
     "url": "https://github.com/danigb/smplr/issues"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha": "2"
+    "browserify": "^13.0.1",
+    "mocha": "2",
+    "uglifyjs": "^2.4.10"
   }
 }

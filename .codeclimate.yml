@@ -15,3 +15,4 @@ ratings:
 exclude_paths:
 - dist/
 - test/
+- example/
