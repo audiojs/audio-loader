@@ -62,6 +62,12 @@ describe('audio-loader', function () {
           assert.deepEqual(result, [ 'file1 audio data', 'file2 audio data' ])
         })
     })
+    it('bypasses audio files', function () {
+      load.request = fetcher({ 'file1.mp3': 'file audio data' })
+      return load(ac, ['file1.mp3', 'copyright notice']).then(function (result) {
+        assert.deepEqual(result, [ 'file audio data', 'copyright notice' ])
+      })
+    })
   })
   describe('Load data objects', function () {
     it('bypassed not audio files', function () {

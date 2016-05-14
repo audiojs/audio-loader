@@ -1,12 +1,12 @@
 /* global AudioContext */
 
 var ac = new AudioContext()
-var load = require('..')(ac)
+var load = require('..')
 
 document.body.innerHTML = '<h2>audio-loader<h2><h1>Example</h1>(open the dev console)'
 
 run(loadSample, loadObject, loadMidijs, loadJSONInst, loadJSON, loadBase64,
-  loadSoundfont, loadDrumMachine)
+  loadSoundfont)
 
 function playBuffer (buffer, when) {
   var source = ac.createBufferSource()
@@ -41,27 +41,27 @@ function run () {
   next()
 }
 function loadDrumMachine (done) {
-  load('@drum-machines/CR-78').then(function (maestro) {
+  load(ac, '@drum-machines/CR-78').then(function (maestro) {
     play('Maestro drum machine!', Object.keys(maestro.samples).reverse(), maestro.samples)
     done(6000)
   })
 }
 function loadSoundfont (done) {
-  load('@soundfont/marimba').then(function (buffers) {
+  load(ac, '@soundfont/marimba').then(function (buffers) {
     play('Marimba!', 'C3 D3 E3 F3 G3 B3 C4 E4 B4 G4', buffers)
     done(2000)
   })
 }
 
 function loadJSONInst (done) {
-  load('example/samples/maestro.json').then(function (maestro) {
+  load(ac, 'example/samples/maestro.json').then(function (maestro) {
     play('Maestro instrument!', Object.keys(maestro.samples), maestro.samples)
     done()
   })
 }
 
 function loadJSON (done) {
-  load('example/samples/maestro.samples.json').then(function (buffers) {
+  load(ac, 'example/samples/maestro.samples.json').then(function (buffers) {
     play('Maestro buffers', Object.keys(buffers), buffers)
     done()
   })
@@ -69,7 +69,7 @@ function loadJSON (done) {
 
 var audioData = require('./samples/blip.audio.js')
 function loadBase64 (done) {
-  load(audioData).then(function (buffer) {
+  load(ac, audioData).then(function (buffer) {
     console.log('base64 buffer', buffer)
     playBuffer(buffer)
     done()
@@ -78,7 +78,7 @@ function loadBase64 (done) {
 
 function loadSample (done) {
   console.log('Loading sample...')
-  load('example/samples/blip.wav').then(function (blip) {
+  load(ac, 'example/samples/blip.wav').then(function (blip) {
     console.log('Playing blip...')
     var now = ac.currentTime
     playBuffer(blip, now)
@@ -90,14 +90,14 @@ function loadSample (done) {
 
 function loadObject (done) {
   var data = { 'snare': 'example/samples/maesnare.wav', clave: 'example/samples/maeclave.wav' }
-  load(data).then(function (buffers) {
+  load(ac, data).then(function (buffers) {
     play('Object', 'clave snare', buffers)
     done()
   })
 }
 
 function loadMidijs (done) {
-  load('@midijs/example/samples/piano-oct4-ogg.js').then(function (buffers) {
+  load(ac, 'example/samples/piano-oct4-ogg.js').then(function (buffers) {
     play('Piano oct4', 'C4 D4 E4 F4 G4 B4', buffers)
     done(2000)
   })
