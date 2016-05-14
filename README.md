@@ -1,18 +1,20 @@
 # audio-loader [![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 
-A powerful but easy audio buffer loader for browser:
+An easy but powerfull audio buffer loader for browser:
 
 ```js
 var ac = new AudioContext()
-var load = require('audio-loader')(ac)
 
-load({ snare: 'samples/snare.wav', kick: 'samples/kick.wav' }).then(loaded) {
-  console.log(loaded) // => { snare: <AudioBuffer>, kick: <AudioBuffer> }
+// load one file
+load(ac, 'http://example.net/audio/file.mp3').then(function (buffer) {
+  console.log(buffer) // => <AudioBuffer>
+})
+
+load(ac, { snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
+  { from: 'http://example.net/'} ).then(audio) {
+  console.log(audio) // => { snare: <AudioBuffer>, kick: <AudioBuffer> }
 })
 ```
-
-Used by: [smplr](https://github.com/danigb/smplr)
-
 
 ## Features
 
@@ -23,41 +25,44 @@ Used by: [smplr](https://github.com/danigb/smplr)
 
 ## Install
 
-Via npm: `npm i --save audio-loader` or grab the [browser ready file](https://raw.githubusercontent.com/danigb/smplr/master/packages/audio-loader/dist/audio-loader.min.js) (4kb) which exports `loader` as window globals.
+Via npm: `npm i --save audio-loader` or grab the [browser ready file](https://raw.githubusercontent.com/danigb/audio-loader/master/dist/audio-loader.min.js) (4kb) which exports `loadAudio` as window global.
 
 ## Usage
 
-`audio-loader` is a flexible function to load audio samples. You can create a loader with an AudioContext instance and an (optional) options hash map:
+<a name="load"></a>
 
-```js
-var loader = require('audio-loader')
-var ac = new AudioContext()
-var load = loader(ac, { /* options, not required */ })
-```
+The API is very simple: `load(ac, source, options)`
 
-The options is an (optional) hash map with the following:
+| Param | Type | Description |
+| --- | --- | --- |
+| ac | <code>AudioContext</code> | the audio context |
+| source | <code>Object</code> | the object to be loaded |
+| options | <code>Object</code> | (Optional) the load options for that object |
 
-- sources <HashMap>: a hash map of audio sources (see below)
-- fetch <Function>: a function to retrieve data from urls
+The options accepts:
 
-The returned `load` function receives only one parameter (the samples to load) and __returns always a Promise__.
+- `fromUrl`: a prefix string or a function to convert file names to urls
 
 #### Load audio files
 
 You can load individual or collection of files:
 
 ```js
-load('http://path/to/file.mp3').then(function (buffer) {
+var ac = new AudioContext()
+load(ac, 'http://path/to/file.mp3').then(function (buffer) {
   // buffer is an AudioBuffer
   play(buffer)
 })
 
-load(['samples/snare.mp3', 'samples/kick.mp3']).then(function (buffers) {
+// apply a prefix using options.fromUrl
+load(ac, ['snare.mp3', 'kick.mp3'], { fromUrl: 'http://server.com/audio/'}).then(function (buffers) {
   // buffers is an array of AudioBuffers
   play(buffers[0])
 })
 
-load({ snare: 'samples/snare.mp3', kick: 'samples/kick.mp3' }).then(function (buffers) {
+// the options.fromUrl can be a function
+function toUrl (name) { return 'http://server.com/samples' + name + '?key=secret' }
+load(ac, { snare: 'snare.mp3', kick: 'kick.mp3' }, { fromUrl: toUrl }).then(function (buffers) {
   // buffers is a hash of names to AudioBuffers
   play(buffers['snare'])
 })
@@ -65,68 +70,25 @@ load({ snare: 'samples/snare.mp3', kick: 'samples/kick.mp3' }).then(function (bu
 
 #### Using data objets to load audio files
 
-You can use any data object and `audio-loader` will load the values that references audio files while keep the rest of the data intact:
+You can use any data object, and `audio-loader` will load the values that references audio files while keep the rest of the data intact:
 
 ```js
 var inst = { name: 'piano', gain: 0.2, audio: 'samples/piano.mp3' }
-load(inst).then(function (piano) {
+load(ac, inst).then(function (piano) {
   console.log(piano.name) // => 'piano' (it's not an audio file)
   console.log(piano.gain) // => 0.2 (it's not an audio file)
   console.log(piano.audio) // => <AudioBuffer> (it loaded the file)
 })
 ```
 
-#### Add audio sources
-
-You can define audio sources with the sources options:
-
-```js
-var load = loader(ac, { sources: {
-  '@drums': 'http://server1.com/audio/drums',
-  '@percussion': 'http://server2.com/samples/percussion'
-}})
-```
-
-and then:
-
-```js
-load({ kick: '@drums/kick.mp3', snare: '@drums/snare.mp3', clave: '@percussion/clave.mp3'}
-```
-
-The source definition can be a function:
-
-```js
-var load = loader(ac, { sources: {
-  '@hi-res': function (name, load) {
-    return load('http://server.com/audio/' + name + '.wav')
-  },
-  '@lo-res': function (name, load) {
-    return load('http://server.com/audio/' + name + '.mp3')
-  }
-}})
-
-load('@hi-res/drum-loop').then(...)
-load('@lo-res/drum-loop').then(...)
-```
-
 #### Load soundfont files
 
 You can load [midi.js](https://github.com/mudcube/MIDI.js) soundfont files, and works out of the box with Benjamin Gleitzman's package of
-[pre-rendered sound fonts](https://github.com/gleitz/midi-js-soundfonts). No server setup, just prepend `@soundfont` before the instrument name:
+[pre-rendered sound fonts](https://github.com/gleitz/midi-js-soundfonts).
 
 ```js
 load('@soundfont/acoustic_grand_piano').then(function(buffers) {
   play(buffers['C2'])
-})
-```
-
-#### Other instruments
-
-Can load [drum-machines](https://github.com/danigb/smplr/tree/master/packages/drum-machines) by prepending `@drum-machines` before the instrument name:
-
-```js
-load('@drum-machines/CR-78').then(function (buffers) {
-  play(buffers['snare'])
 })
 ```
 
@@ -135,7 +97,7 @@ load('@drum-machines/CR-78').then(function (buffers) {
 To run the test, clone this repo and:
 
 ```bash
-npm i
+npm install
 npm test
 ```
 
