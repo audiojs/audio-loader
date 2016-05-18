@@ -18,6 +18,13 @@ describe('audio-loader', function () {
 
     })
   })
+  describe('Invalid parameters', function () {
+    it('rejects nulls', function (done) {
+      load(ac, null).then(function () {
+        assert(false, 'Should throw an error')
+      }).catch(function (err) { assert(err); done() })
+    })
+  })
   describe('Loads ArrayBuffer', function () {
     it('loads ArrayBuffer', function () {
       return load(ac, utils.strToArrayBuffer('audio data')).then(function (data) {
@@ -142,7 +149,7 @@ describe('audio-loader', function () {
       })
     })
   })
-  describe('Load soundfonts', function () {
+  describe('Custom loader', function () {
     it('builds url', function () {
       load.request = fetcher({ 'https://cdn.rawgit.com/gleitz/midi-js-Soundfonts/master/FluidR3_GM//acoustic_grand_piano-ogg.js': pianoSF })
       return load(ac, '@soundfont/acoustic_grand_piano').then(function (data) {

@@ -24,7 +24,6 @@ load(ac, { snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
 - Load single audio files or collection of them (either using arrays or data objects)
 - Load base64 encoded audio strings
 - Compatible with midi.js pre-rendered soundfonts packages
-- Can load from a server or from a github repository
 
 ## Install
 
@@ -87,14 +86,29 @@ load(ac, inst).then(function (piano) {
 
 #### Load soundfont files
 
-You can load [midi.js](https://github.com/mudcube/MIDI.js) soundfont files, and works out of the box with Benjamin Gleitzman's package of
-[pre-rendered sound fonts](https://github.com/gleitz/midi-js-soundfonts).
+You can load [midi.js](https://github.com/mudcube/MIDI.js) js soundfont files:
 
 ```js
-load(ac, '@soundfont/acoustic_grand_piano').then(function(buffers) {
-  play(buffers['C2'])
+load(ac, 'acoustic_grand_piano-ogg.js').then(function (buffers) {
+  buffers['C2'] // => <AudioBuffer>
 })
 ```
+
+For example, you can use [rawgit](rawgit.com) to load soundfont files without need of a server:
+
+```js
+// build the instrument url
+function instUrl(name, format) {
+  format = format || 'ogg'
+  return 'https://cdn.rawgit.com/gleitz/midi-js-Soundfonts/master' +
+    '/FluidR3_GM/' + name + '-' + format + '.js'
+}
+load(ac, instUrl('acoustic_grand_piano', 'mp3')).then(function (buffers) {
+  buffers['C2'] // => <AudioBuffer>
+})
+```
+
+Remember that [rawgit is only for low-traffic urls](https://github.com/rgrove/rawgit/wiki/Frequently-Asked-Questions#can-i-use-a-rawgitcom-development-url-on-a-production-website-or-in-public-example-code)
 
 ## Run tests and examples
 
