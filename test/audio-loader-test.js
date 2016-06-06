@@ -34,25 +34,25 @@ describe('audio-loader', function () {
   })
   describe('Load audio file names', function () {
     it('mp3', function () {
-      load.request = fetcher({ 'audio.mp3': 'mp3 data' })
+      load.fetch = fetcher({ 'audio.mp3': 'mp3 data' })
       return load(ac, 'audio.mp3').then(function (data) {
         assert.equal(data, 'mp3 data')
       })
     })
     it('ogg', function () {
-      load.request = fetcher({ 'audio.ogg': 'ogg data' })
+      load.fetch = fetcher({ 'audio.ogg': 'ogg data' })
       return load(ac, 'audio.ogg').then(function (data) {
         assert.equal(data, 'ogg data')
       })
     })
     it('wav', function () {
-      load.request = fetcher({ 'audio.ogg': 'ogg data' })
+      load.fetch = fetcher({ 'audio.ogg': 'ogg data' })
       return load(ac, 'audio.ogg').then(function (data) {
         assert.equal(data, 'ogg data')
       })
     })
     it('options.from', function () {
-      load.request = fetcher({ 'server.com/audio.mp3': 'mp3 data' })
+      load.fetch = fetcher({ 'server.com/audio.mp3': 'mp3 data' })
       return load(ac, 'audio.mp3', {from: 'server.com/'}).then(function (data) {
         assert.equal(data, 'mp3 data')
       })
@@ -60,7 +60,7 @@ describe('audio-loader', function () {
   })
   describe('Load data arrays', function () {
     it('multiple file names', function () {
-      load.request = fetcher({
+      load.fetch = fetcher({
         'server.com/file1.mp3': 'file1 audio data',
         'server.com/file2.mp3': 'file2 audio data'
       })
@@ -70,7 +70,7 @@ describe('audio-loader', function () {
         })
     })
     it('bypasses audio files', function () {
-      load.request = fetcher({ 'file1.mp3': 'file audio data' })
+      load.fetch = fetcher({ 'file1.mp3': 'file audio data' })
       return load(ac, ['file1.mp3', 'copyright notice']).then(function (result) {
         assert.deepEqual(result, [ 'file audio data', 'copyright notice' ])
       })
@@ -78,7 +78,7 @@ describe('audio-loader', function () {
   })
   describe('Load data objects', function () {
     it('bypassed not audio files', function () {
-      load.request = fetcher({
+      load.fetch = fetcher({
         'server.com/file1.mp3': 'file1 audio data',
         'server.com/file2.mp3': 'file2 audio data'
       })
@@ -89,7 +89,7 @@ describe('audio-loader', function () {
       })
     })
     it('options.only', function () {
-      load.request = fetcher({
+      load.fetch = fetcher({
         'server.com/file2.mp3': 'file2 audio data'
       })
       return load(ac, { one: 'file1.mp3', two: 'file2.mp3', total: 2 },
@@ -119,7 +119,7 @@ describe('audio-loader', function () {
   describe('Load JSON files', function () {
     it('an object of audio file names', function () {
       var json = '{ "snare": "audio/snare.mp3", "kick": "audio/kick.mp3" }'
-      load.request = fetcher({
+      load.fetch = fetcher({
         'server.com/audio/snare.mp3': 'snare audio data',
         'server.com/audio/kick.mp3': 'kick audio data',
         'server.com/file.json?data=true': json
@@ -132,7 +132,7 @@ describe('audio-loader', function () {
   })
   describe('Load MIDI.js Soundfont js pre-rendered files', function () {
     it('loads data file', function () {
-      load.request = fetcher({ 'piano.js?data=true': pianoSF })
+      load.fetch = fetcher({ 'piano.js?data=true': pianoSF })
       return load(ac, 'piano.js?data=true').then(function (data) {
         assert.deepEqual(data,
           { A0: 'audio', Bb0: 'audio', B0: 'audio',
@@ -140,19 +140,9 @@ describe('audio-loader', function () {
       })
     })
     it('options.from', function () {
-      load.request = fetcher({ 'server.com/piano.js?audio=true': pianoSF })
+      load.fetch = fetcher({ 'server.com/piano.js?audio=true': pianoSF })
       function toUrl (name) { return 'server.com/' + name + '?audio=true' }
       return load(ac, 'piano.js', { from: toUrl }).then(function (data) {
-        assert.deepEqual(data,
-          { A0: 'audio', Bb0: 'audio', B0: 'audio',
-            C1: 'audio', Db1: 'audio' })
-      })
-    })
-  })
-  describe('Custom loader', function () {
-    it('builds url', function () {
-      load.request = fetcher({ 'https://cdn.rawgit.com/gleitz/midi-js-Soundfonts/master/FluidR3_GM//acoustic_grand_piano-ogg.js': pianoSF })
-      return load(ac, '@soundfont/acoustic_grand_piano').then(function (data) {
         assert.deepEqual(data,
           { A0: 'audio', Bb0: 'audio', B0: 'audio',
             C1: 'audio', Db1: 'audio' })

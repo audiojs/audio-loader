@@ -1,5 +1,7 @@
 CHANGELOG
 
+[0.5.0] Clean code. Preparing for 1.0.0
+[0.4.0] Remove @soundfont tag
 [0.3.1] Recognize null as not valid value
 [0.3.0] Remove sources, simplify API
 [0.2.0] You can add sources options
