@@ -28,29 +28,25 @@ load(ac, { snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
 
 ## Install
 
-Via npm: `npm i --save audio-loader` or grab the [browser ready file](https://raw.githubusercontent.com/danigb/audio-loader/master/dist/audio-loader.min.js) (4kb) which exports `loadAudio` as window global.
+__Node__
+
+Via npm: `npm i --save audio-loader`
+
+__Browser__
+
+Download the [minified distribution](https://raw.githubusercontent.com/danigb/audio-loader/master/dist/audio-loader.min.js) (4kb) which exports `loadAudio` as window global:
+
+```html
+<script src="audio-loader.min.js"></script>
+<script>
+  var ac = new AudioConect()
+  loadAudio(ac, 'file.wav').then(..)
+</script>
+```
 
 ## Usage
 
 <a name="load"></a>
-
-### API: `load(ac, source, options)`
-
-| Param | Type | Description |
-| --- | --- | --- |
-| ac | <code>AudioContext</code> | the audio context |
-| source | <code>Object</code> | the object to be loaded |
-| options | <code>Object</code> | (Optional) the load options for that object |
-
-Possible option keys:
-
-- __from__ {Function|String}: a function or string to convert from file names to urls.
-If is a string it will be prefixed to the name:
-`load(ac, 'snare.mp3', { from: 'http://audio.net/samples/' })`
-If it's a function it receives the file name and should return the url as string.
-- __only__ {Array} - when loading objects, if provided, only the given keys
-will be included in the decoded object:
-`load(ac, 'piano.json', { only: ['C2', 'D2'] })`
 
 #### Load audio files
 
@@ -92,13 +88,34 @@ load(ac, inst).then(function (piano) {
 
 #### Load soundfont files
 
-You can load [midi.js](https://github.com/mudcube/MIDI.js) js soundfont files:
+If you provide a `.js` file, `audio-loader` will interpret it as a [midi.js](https://github.com/mudcube/MIDI.js) soundfont file and try to load it:
 
 ```js
 load(ac, 'acoustic_grand_piano-ogg.js').then(function (buffers) {
   buffers['C2'] // => <AudioBuffer>
 })
 ```
+
+This is a repository of them: https://github.com/gleitz/midi-js-soundfonts
+
+### API: `load(ac, source, options)`
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ac | <code>AudioContext</code> | the audio context |
+| source | <code>Object</code> | the object to be loaded |
+| options | <code>Object</code> | (Optional) the load options for that object |
+
+Possible option keys:
+
+- __from__ {Function|String}: a function or string to convert from file names to urls.
+If is a string it will be prefixed to the name:
+`load(ac, 'snare.mp3', { from: 'http://audio.net/samples/' })`
+If it's a function it receives the file name and should return the url as string.
+- __only__ {Array} - when loading objects, if provided, only the given keys
+will be included in the decoded object:
+`load(ac, 'piano.json', { only: ['C2', 'D2'] })`
+
 
 ## Run tests and examples
 
