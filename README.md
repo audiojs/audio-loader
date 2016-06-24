@@ -39,7 +39,7 @@ Download the [minified distribution](https://raw.githubusercontent.com/danigb/au
 ```html
 <script src="audio-loader.min.js"></script>
 <script>
-  var ac = new AudioConect()
+  var ac = new AudioContext()
   loadAudio(ac, 'file.wav').then(..)
 </script>
 ```
