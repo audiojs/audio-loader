@@ -24,7 +24,13 @@
   "bugs": {
     "url": "https://github.com/danigb/audio-loader/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "audio-context": "^0.1.0",
+    "audio-decode": "^1.2.0",
+    "audio-play": "audiojs/audio-play",
+    "is-audio-buffer": "^1.0.1",
+    "request": "^2.74.0"
+  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "mocha": "2",
