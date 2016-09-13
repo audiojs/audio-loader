@@ -7,7 +7,8 @@
     "test": "mocha",
     "dist": "browserify lib/index.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
     "api": "jsdoc2md lib/index.js > API.md",
-    "prepublish": "npm test &&  npm run dist"
+    "prepublish": "npm test &&  npm run dist",
+    "example": "budo example/browser.js"
   },
   "repository": {
     "type": "git",
