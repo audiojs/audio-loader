@@ -2,6 +2,8 @@
 var assert = require('assert')
 var isBuffer = require('is-audio-buffer')
 var load = require('..')
+var wavBuffer = require('audio-lena/wav')
+var mp3Buffer = require('audio-lena/mp3')
 
 function testBuffer (buffer) {
   assert(buffer, 'buffer is present')
@@ -10,10 +12,16 @@ function testBuffer (buffer) {
 }
 
 describe('audio-loader@node', function () {
+  it('load wav buffer', function () {
+    return load(wavBuffer).then(testBuffer)
+  })
+  it('load mp3 buffer', function () {
+    return load(mp3Buffer).then(testBuffer)
+  })
   it('load wav files', function () {
     return load('./example/samples/maeclave.wav').then(testBuffer)
   })
-  it.skip('load mp3 files', function () {
-    return load('./example/samples/drumroll.mp3').then(testBuffer)
+  it('load mp3 files', function () {
+    return load('./example/samples/train.mp3').then(testBuffer)
   })
 })

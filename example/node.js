@@ -37,7 +37,7 @@ var examples = [
       .then(play).catch(err)
   }],
   ['Load a mp3 file', function () {
-    return load(__dirname + '/samples/drumroll.mp3').then(play).catch(err)
+    return load(__dirname + '/samples/train.mp3').then(play).catch(err)
   }],
   ['Load a ogg file', function () {
     return load(__dirname + '/samples/sound.ogg').then(play).catch(err)

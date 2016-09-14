@@ -96,14 +96,16 @@ load('acoustic_grand_piano-ogg.js').then(function (buffers) {
 
 This is a repository of them: https://github.com/gleitz/midi-js-soundfonts
 
-### API: `load(source, options)`
+#### API
+### `load(source, [options, audioContext])`
 
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>Object</code> | the object to be loaded |
 | options | <code>Object</code> | (Optional) the load options for that object |
+| audioContext | <code>AudioContext</code> | (Optional, browser only) an audio context |
 
-Possible option keys:
+Possible `options` keys are:
 
 - __from__ {Function|String}: a function or string to convert from file names to urls.
 If is a string it will be prefixed to the name:
@@ -115,6 +117,13 @@ will be included in the decoded object:
 - __decode__ {Function}: a function to decode audio. It receives a buffer and must return a promise to an audio buffer
 - __fetch__ {Function}: a function to fetch files. It receives an url and a response type (one of 'arraybuffer' or 'text') and must return a promise to the contents
 
+Example of usage with optional AudioContext:
+
+```js
+var load = require('audio-loader')
+var ac = new AudioContext()
+load('file.mp3', { from: 'server.com/samples/' }, ac).then(...)
+```
 
 ## Run tests and examples
 
