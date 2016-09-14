@@ -100,7 +100,6 @@ This is a repository of them: https://github.com/gleitz/midi-js-soundfonts
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ac | <code>AudioContext</code> | the audio context |
 | source | <code>Object</code> | the object to be loaded |
 | options | <code>Object</code> | (Optional) the load options for that object |
 
@@ -113,6 +112,8 @@ If it's a function it receives the file name and should return the url as string
 - __only__ {Array} - when loading objects, if provided, only the given keys
 will be included in the decoded object:
 `load('piano.json', { only: ['C2', 'D2'] })`
+- __decode__ {Function}: a function to decode audio. It receives a buffer and must return a promise to an audio buffer
+- __fetch__ {Function}: a function to fetch files. It receives an url and a response type (one of 'arraybuffer' or 'text') and must return a promise to the contents
 
 
 ## Run tests and examples

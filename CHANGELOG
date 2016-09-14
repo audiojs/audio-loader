@@ -1,5 +1,8 @@
 CHANGELOG
 
+[0.6.0]
+  - BREAKING: the load function doesn't accept AudioContext as fist parameter.
+  - Support node enviroment (via audiojs)
 [0.5.0] Clean code. Preparing for 1.0.0
 [0.4.0] Remove @soundfont tag
 [0.3.1] Recognize null as not valid value

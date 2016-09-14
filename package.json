@@ -6,10 +6,10 @@
   "browser": "lib/browser.js",
   "scripts": {
     "test": "mocha",
-    "dist": "browserify lib/index.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
+    "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
     "api": "jsdoc2md lib/index.js > API.md",
     "prepublish": "npm test &&  npm run dist",
-    "example": "budo example/browser.js"
+    "browser-example": "budo example/browser.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "audio-play": "audiojs/audio-play",
     "browserify": "^13.0.1",
     "mocha": "2",
+    "prompt": "^1.0.0",
     "uglifyjs": "^2.4.10"
   }
 }

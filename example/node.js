@@ -1,28 +1,54 @@
 var play = require('audio-play')
-var load = require('../node')
-global.Promise = require('bluebird')
-Promise.longStackTraces()
+var load = require('..')
+var prompt = require('prompt')
+function err (error) { console.error('Error:', error) }
 
-load.skip = () => Promise.reject('skip')
+prompt.start()
 
-function err () { console.log('Error:', arguments) }
+function ask () {
+  examples.forEach(function (example, i) {
+    console.log('[' + i + '] ' + example[0])
+  })
+  console.log('Write a number or anything else to exit.')
 
-console.log('Load a single sample from the filesystem')
-load.skip(__dirname + '/samples/maeclave.wav').then(play).catch(err)
+  prompt.get('option', function (err, result) {
+    if (err) throw Error(err)
+    var option = result.option
+    if (examples[option]) {
+      examples[option][1]().then(function () {
+        ask()
+      })
+    }
+  })
+}
 
-console.log('Load a single sample from http')
-load.skip('https://danigb.github.io/sampled/CR-78/samples/cowbell.wav').then(play).catch(err)
-
-console.log('Load a midijs soundfont format')
-load('http://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/marimba-mp3.js').then(function (inst) {
-  playSamples(inst, ['C4', 'D4', 'E4', 'F4', 'G4'])
-})
-
-console.log('Load a json with multiple encoded samples')
-load.skip('https://danigb.github.io/sampled/CR-78/CR-78.json').then(function (inst) {
-  var names = Object.keys(inst.samples)
-  playSamples(inst.samples, names)
-}).catch(err)
+var examples = [
+  ['Load a wav file', function () {
+    return load(__dirname + '/samples/maeclave.wav')
+      .then(play).catch(err)
+  }],
+  ['Load a mp3 file', function () {
+    return load(__dirname + '/samples/drumroll.mp3').then(play).catch(err)
+  }],
+  ['Load a ogg file', function () {
+    return load(__dirname + '/samples/sound.ogg').then(play).catch(err)
+  }],
+  ['Fetch a wav file', function () {
+    return load('https://danigb.github.io/sampled/CR-78/samples/cowbell.wav')
+      .then(play).catch(err)
+  }],
+  ['Fecth mp3 encoded soundfont', function () {
+    return load('http://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/marimba-mp3.js').then(function (inst) {
+      playSamples(inst, ['C4', 'D4', 'E4', 'F4', 'G4'])
+    })
+  }],
+  ['Fetch drum machine', function () {
+    return load('https://danigb.github.io/sampled/CR-78/CR-78.json').then(function (inst) {
+      var names = Object.keys(inst.samples)
+      playSamples(inst.samples, names)
+    }).catch(err)
+  }]
+]
 
 function playSamples (source, names) {
   names.forEach(function (name, i) {
@@ -32,3 +58,5 @@ function playSamples (source, names) {
     setTimeout(playSample, 1000 * i)
   })
 }
+
+ask()
