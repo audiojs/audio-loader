@@ -1,6 +1,9 @@
 var play = require('audio-play')
 var load = require('..')
 var prompt = require('prompt')
+var lenaWav = require('audio-lena/wav')
+var lenaMp3 = require('audio-lena/mp3')
+
 function err (error) { console.error('Error:', error) }
 
 prompt.start()
@@ -23,6 +26,12 @@ function ask () {
 }
 
 var examples = [
+  ['Load a .wav buffer directly', function () {
+    return load(lenaWav).then(play).catch(err)
+  }],
+  ['Load a .mp3 buffer directly', function () {
+    return load(lenaMp3).then(play).catch(err)
+  }],
   ['Load a wav file', function () {
     return load(__dirname + '/samples/maeclave.wav')
       .then(play).catch(err)

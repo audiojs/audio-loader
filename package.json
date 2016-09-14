@@ -34,6 +34,7 @@
     "request": "^2.74.0"
   },
   "devDependencies": {
+    "audio-lena": "^1.1.0",
     "audio-play": "audiojs/audio-play",
     "browserify": "^13.0.1",
     "mocha": "2",
