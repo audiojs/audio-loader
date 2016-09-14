@@ -1,8 +1,9 @@
 {
   "name": "audio-loader",
-  "version": "0.5.0",
-  "description": "A flexible web audio sample loader",
+  "version": "0.6.0",
+  "description": "A flexible web audio sample loader for browser and node",
   "main": "lib/index.js",
+  "browser": "lib/browser.js",
   "scripts": {
     "test": "mocha",
     "dist": "browserify lib/index.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
@@ -18,7 +19,8 @@
     "audio",
     "buffer",
     "loader",
-    "webaudio"
+    "webaudio",
+    "audiojs"
   ],
   "author": "danigb <danigb@gmail.com>",
   "license": "MIT",
@@ -28,11 +30,11 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "audio-decode": "^1.2.0",
-    "audio-play": "audiojs/audio-play",
     "is-audio-buffer": "^1.0.1",
     "request": "^2.74.0"
   },
   "devDependencies": {
+    "audio-play": "audiojs/audio-play",
     "browserify": "^13.0.1",
     "mocha": "2",
     "uglifyjs": "^2.4.10"

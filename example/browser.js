@@ -1,104 +1,86 @@
-/* global AudioContext */
-
-var ac = new AudioContext()
 var load = require('..')
+var ac = require('audio-context')
 
-document.body.innerHTML = '<h2>audio-loader<h2><h1>Example</h1>(open the dev console)'
+addTitle(1, '<code>audio-loader</code> examples')
+addExample('Load wav audio file', function () {
+  load('example/samples/maeclave.wav').then(playBuffer).catch(err)
+})
+addExample('Load mp3 audio file', function () {
+  load('example/samples/drumroll.mp3').then(playBuffer).catch(err)
+})
+addExample('Load object with filenames', function () {
+  load({ snare: 'maesnare.wav', clave: 'maeclave.wav' }, { from: 'example/samples/' })
+    .then(playObject).catch(err)
+})
+addExample('Load array of filenames', function () {
+  load(['maesnare.wav', 'maeclave.wav'], { from: 'example/samples/' })
+    .then(playArray).catch(err)
+})
+addExample('Load mp3 soundfont file', function () {
+  load('http://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/marimba-mp3.js')
+    .then(playNotes('C4 D4 E4 F4 G4 A4 B4 C5')).catch(err)
+})
+addExample('Load ogg soundfont file', function () {
+  load('http://gleitz.github.io/midi-js-soundfonts/MusyngKite/kalimba-ogg.js')
+    .then(playNotes('C4 D4 E4 F4 G4 A4 B4 C5')).catch(err)
+})
+addExample('Load drum machine', function () {
+  load('https://danigb.github.io/sampled/CR-78/CR-78.json').then(function (inst) {
+    playArray(Object.keys(inst.samples).map(function (name) {
+      return inst.samples[name]
+    }))
+  }).catch(err)
+})
+addExample('Load a js module', function () {
+  load(require('./samples/piano-note.audio.js')).then(playBuffer).catch(err)
+})
 
-run(loadSample, loadObject, loadMidijs, loadJSONInst, loadJSON, loadBase64,
-  loadSoundfont)
-
-function playBuffer (buffer, when) {
+function playBuffer (buffer, time) {
   var source = ac.createBufferSource()
   source.buffer = buffer
   source.connect(ac.destination)
-  source.start(when || ac.currentTime)
+  source.start(time || ac.currentTime)
 }
-
-function play (name, samples, buffers) {
-  if (typeof samples === 'string') samples = samples.split(' ')
-  console.log('Playing:', name, samples)
+function playArray (array) {
   var now = ac.currentTime
-  console.log(name, samples, now)
-  samples.forEach(function (name, i) {
-    playBuffer(buffers[name], now + 0.3 * i)
+  array.forEach(function (buffer, i) {
+    playBuffer(buffer, now + i * 0.5)
   })
 }
-
-function run () {
-  var examples = Array.prototype.slice.call(arguments).reverse()
-  var current = examples.length - 1
-  var next = function (time) {
-    if (current < 0) return
-    var c = current
-    time = time || 1000
-    console.log('Next', current, examples[current].name)
-    setTimeout(function () {
-      examples[c](next)
-    }, time)
-    current--
+function playObject (obj) {
+  playArray(Object.keys(obj).map(function (n) { return obj[n] }))
+}
+function playNotes (notes) {
+  return function (inst) {
+    playArray(notes.split(' ').map(function (note) {
+      return inst[note]
+    }))
   }
-  next()
 }
-function loadDrumMachine (done) {
-  load(ac, '@drum-machines/CR-78').then(function (maestro) {
-    play('Maestro drum machine!', Object.keys(maestro.samples).reverse(), maestro.samples)
-    done(6000)
-  })
-}
-function loadSoundfont (done) {
-  load(ac, '@soundfont/marimba').then(function (buffers) {
-    play('Marimba!', 'C3 D3 E3 F3 G3 B3 C4 E4 B4 G4', buffers)
-    done(2000)
-  })
+function err (error) {
+  console.log('Error', error)
 }
 
-function loadJSONInst (done) {
-  load(ac, 'example/samples/maestro.json').then(function (maestro) {
-    play('Maestro instrument!', Object.keys(maestro.samples), maestro.samples)
-    done()
-  })
+function append (el) { document.body.appendChild(el) }
+function addTitle (num, text) { append(h('h' + num, null, text)) }
+
+function addExample (name, cb) {
+  append(h('h3', null, [h('a', {
+    href: '#',
+    onclick: function (e) { e.preventDefault(); cb() }
+  }, name)]))
+  append(h('pre', null, cb.toString()))
 }
 
-function loadJSON (done) {
-  load(ac, 'example/samples/maestro.samples.json').then(function (buffers) {
-    play('Maestro buffers', Object.keys(buffers), buffers)
-    done()
-  })
-}
-
-var audioData = require('./samples/blip.audio.js')
-function loadBase64 (done) {
-  load(ac, audioData).then(function (buffer) {
-    console.log('base64 buffer', buffer)
-    playBuffer(buffer)
-    done()
-  })
-}
-
-function loadSample (done) {
-  console.log('Loading sample...')
-  load(ac, 'example/samples/blip.wav').then(function (blip) {
-    console.log('Playing blip...')
-    var now = ac.currentTime
-    playBuffer(blip, now)
-    playBuffer(blip, now + 0.2)
-    playBuffer(blip, now + 0.4)
-    done()
-  })
-}
-
-function loadObject (done) {
-  var data = { 'snare': 'example/samples/maesnare.wav', clave: 'example/samples/maeclave.wav' }
-  load(ac, data).then(function (buffers) {
-    play('Object', 'clave snare', buffers)
-    done()
-  })
-}
-
-function loadMidijs (done) {
-  load(ac, 'example/samples/piano-oct4-ogg.js').then(function (buffers) {
-    play('Piano oct4', 'C4 D4 E4 F4 G4 B4', buffers)
-    done(2000)
-  })
+function h (name, props, children) {
+  props = props || {}
+  var el = document.createElement(name)
+  Object.assign(el, props)
+  if (typeof children === 'string') el.innerHTML = children
+  else if (Array.isArray(children)) {
+    children.forEach(function (c) {
+      el.appendChild(c)
+    })
+  }
+  return el
 }

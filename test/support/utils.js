@@ -21,6 +21,12 @@ function arrayBufferToStr (buf) {
   return String.fromCharCode.apply(null, new Uint16Array(buf))
 }
 
+function decode (buffer) {
+  return new Promise(function (resolve, reject) {
+    buffer ? resolve(arrayBufferToStr(buffer)) : reject('Buffer not present')
+  })
+}
+
 var audioContext = {
   decodeAudioData: function (array, done, err) {
     if (!array) err('Array not present')
@@ -43,5 +49,6 @@ module.exports = {
   strToBase64Audio: strToBase64Audio,
   arrToBase64Audio: arrToBase64Audio,
   audioContext: audioContext,
-  fetcher: fetcher
+  fetcher: fetcher,
+  decode: decode
 }
