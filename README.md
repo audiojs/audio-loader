@@ -97,13 +97,12 @@ load('acoustic_grand_piano-ogg.js').then(function (buffers) {
 This is a repository of them: https://github.com/gleitz/midi-js-soundfonts
 
 #### API
-### `load(source, [options, audioContext])`
+### `load(source, [options])`
 
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>Object</code> | the object to be loaded |
-| options | <code>Object</code> | (Optional) the load options for that object |
-| audioContext | <code>AudioContext</code> | (Optional, browser only) an audio context |
+| options | <code>Object</code> | (Optional) the load options for that source |
 
 Possible `options` keys are:
 
@@ -114,16 +113,9 @@ If it's a function it receives the file name and should return the url as string
 - __only__ {Array} - when loading objects, if provided, only the given keys
 will be included in the decoded object:
 `load('piano.json', { only: ['C2', 'D2'] })`
-- __decode__ {Function}: a function to decode audio. It receives a buffer and must return a promise to an audio buffer
+- __context__ {AudioContext}: (browser only) The audio context to use. By default uses [`audio-context`](https://www.npmjs.com/package/audio-context)
+- __decode__ {Function}: a function to decode audio. It receives a buffer and must return a promise to an audio buffer.
 - __fetch__ {Function}: a function to fetch files. It receives an url and a response type (one of 'arraybuffer' or 'text') and must return a promise to the contents
-
-Example of usage with optional AudioContext:
-
-```js
-var load = require('audio-loader')
-var ac = new AudioContext()
-load('file.mp3', { from: 'server.com/samples/' }, ac).then(...)
-```
 
 ## Run tests and examples
 
