@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "scripts": {
-    "test": "mocha",
+    "test": "npm run lint && mocha",
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
     "lint": "standard",
     "api": "jsdoc2md lib/index.js > API.md",

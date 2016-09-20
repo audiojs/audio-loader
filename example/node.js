@@ -34,14 +34,14 @@ var examples = [
     return load(lenaMp3).then(play).catch(err)
   }],
   ['Load a wav file', function () {
-    return load(path.join(__dirname, 'samples/maeclave.wav'))
+    return load(path.join(__dirname, '/samples/maeclave.wav'))
       .then(play).catch(err)
   }],
   ['Load a mp3 file', function () {
-    return load(path.join(__dirname, 'samples/train.mp3')).then(play).catch(err)
+    return load(path.join(__dirname, '/samples/train.mp3')).then(play).catch(err)
   }],
   ['Load a ogg file', function () {
-    return load(path.join(__dirname, 'samples/sound.ogg')).then(play).catch(err)
+    return load(path.join(__dirname, '/samples/sound.ogg')).then(play).catch(err)
   }],
   ['Fetch a wav file', function () {
     return load('https://danigb.github.io/sampled/CR-78/samples/cowbell.wav')
