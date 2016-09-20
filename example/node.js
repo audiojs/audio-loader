@@ -3,6 +3,7 @@ var load = require('..')
 var prompt = require('prompt')
 var lenaWav = require('audio-lena/wav')
 var lenaMp3 = require('audio-lena/mp3')
+var path = require('path')
 
 function err (error) { console.error('Error:', error) }
 
@@ -33,14 +34,14 @@ var examples = [
     return load(lenaMp3).then(play).catch(err)
   }],
   ['Load a wav file', function () {
-    return load(__dirname + '/samples/maeclave.wav')
+    return load(path.join(__dirname, 'samples/maeclave.wav'))
       .then(play).catch(err)
   }],
   ['Load a mp3 file', function () {
-    return load(__dirname + '/samples/train.mp3').then(play).catch(err)
+    return load(path.join(__dirname, 'samples/train.mp3')).then(play).catch(err)
   }],
   ['Load a ogg file', function () {
-    return load(__dirname + '/samples/sound.ogg').then(play).catch(err)
+    return load(path.join(__dirname, 'samples/sound.ogg')).then(play).catch(err)
   }],
   ['Fetch a wav file', function () {
     return load('https://danigb.github.io/sampled/CR-78/samples/cowbell.wav')

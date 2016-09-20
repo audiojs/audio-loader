@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha",
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
-    "lint": "eslint *.js --ignore-pattern test/*",
+    "lint": "standard",
     "api": "jsdoc2md lib/index.js > API.md",
     "prepublish": "npm test &&  npm run dist",
     "browser-example": "budo example/browser.js"
@@ -38,9 +38,9 @@
     "audio-lena": "^1.1.0",
     "audio-play": "audiojs/audio-play",
     "browserify": "^13.0.1",
-    "eslint": "^3.5.0",
     "mocha": "2",
     "prompt": "^1.0.0",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "standard": "^8.1.0"
   }
 }
