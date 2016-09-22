@@ -163,7 +163,7 @@ describe('audio-loader@browser:', function () {
       })
     })
   })
-  describe.skip('Load MIDI.js Soundfont js pre-rendered files', function () {
+  describe('Load MIDI.js Soundfont js pre-rendered files', function () {
     it('loads data file', function () {
       var opts = {
         decode: utils.decode,
