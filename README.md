@@ -101,7 +101,7 @@ This is a repository of them: https://github.com/gleitz/midi-js-soundfonts
 
 | Param | Type | Description |
 | --- | --- | --- |
-| source | <code>Object</code> | the object to be loaded |
+| source | <code>Object</code> | the object to be loaded: can be an URL string, ArrayBuffer with encoded data or an array/map of sources |
 | options | <code>Object</code> | (Optional) the load options for that source |
 
 Possible `options` keys are:

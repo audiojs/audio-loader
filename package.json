@@ -5,8 +5,9 @@
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "scripts": {
-    "test": "mocha",
+    "test": "npm run lint && mocha",
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
+    "lint": "standard",
     "api": "jsdoc2md lib/index.js > API.md",
     "prepublish": "npm test &&  npm run dist",
     "browser-example": "budo example/browser.js"
@@ -22,6 +23,11 @@
     "webaudio",
     "audiojs"
   ],
+  "standard": {
+    "ignore": [
+      "test/support/piano.js"
+    ]
+  },
   "author": "danigb <danigb@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -39,6 +45,7 @@
     "browserify": "^13.0.1",
     "mocha": "2",
     "prompt": "^1.0.0",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "standard": "^8.1.0"
   }
 }
