@@ -27,7 +27,8 @@ load({ snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
 - Compatible with midi.js pre-rendered soundfonts packages like [midi-js-soundfonts](https://github.com/gleitz/midi-js-soundfonts/tree/master/MusyngKite)
 - Compatible with json encoded audio like [sampled](https://github.com/danigb/sampled)
 
-## Install
+
+## Install
 
 __Npm__
 
