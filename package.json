@@ -9,7 +9,6 @@
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
     "lint": "eslint lib/*.js",
     "api": "jsdoc2md lib/index.js > API.md",
-    "prepublish": "npm test && npm run dist",
     "browser-example": "budo example/browser.js"
   },
   "repository": {
@@ -24,6 +23,7 @@
     "audiojs"
   ],
   "author": "danigb <danigb@gmail.com>",
+  "contributors": ["Dima Yv <df.creative@gmail.com>"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/danigb/audio-loader/issues"
