@@ -5,6 +5,7 @@ var load = require('..')
 var wavBuffer = require('audio-lena/wav')
 var mp3Buffer = require('audio-lena/mp3')
 var t = require('tape')
+var path = require('path')
 
 function testBuffer (buffer) {
   assert(buffer, 'buffer is present')
@@ -23,4 +24,7 @@ t('load wav files', function (t) {
 })
 t('load mp3 files', function (t) {
   load('./example/samples/train.mp3').then(testBuffer).then(() => t.end(), () => t.fail())
+})
+t('absolute paths', function (t) {
+  load(path.resolve('./example/samples/train.mp3')).then(testBuffer).then(() => t.end(), () => t.fail())
 })
