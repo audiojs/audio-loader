@@ -31,7 +31,6 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "audio-decode": "^1.2.0",
-    "audio-play": "^2.1.0",
     "is-absolute": "^0.2.6",
     "is-audio-buffer": "^1.0.1",
     "is-relative": "^0.2.1",
