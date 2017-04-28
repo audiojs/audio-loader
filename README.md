@@ -1,6 +1,7 @@
 # audio-loader [![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 
 [![Build Status](https://travis-ci.org/danigb/audio-loader.svg?branch=master)](https://travis-ci.org/danigb/audio-loader) [![Code Climate](https://codeclimate.com/github/danigb/audio-loader/badges/gpa.svg)](https://codeclimate.com/github/danigb/audio-loader) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard) [![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
+[![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-loader.svg)](https://greenkeeper.io/)
 
 An simple and flexible audio buffer loader for browser and node:
 

@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "audio-lena": "^1.1.0",
-    "prompt": "^1.0.0",
     "tape": "^4.6.3"
   }
 }
