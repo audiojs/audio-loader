@@ -5,11 +5,11 @@
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "scripts": {
-    "test": "npm run lint && mocha",
+    "test": "node test/node-test",
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
-    "lint": "standard",
+    "lint": "eslint lib/*.js",
     "api": "jsdoc2md lib/index.js > API.md",
-    "prepublish": "npm test &&  npm run dist",
+    "prepublish": "npm test && npm run dist",
     "browser-example": "budo example/browser.js"
   },
   "repository": {
@@ -23,11 +23,6 @@
     "webaudio",
     "audiojs"
   ],
-  "standard": {
-    "ignore": [
-      "test/support/piano.js"
-    ]
-  },
   "author": "danigb <danigb@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -36,16 +31,15 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "audio-decode": "^1.2.0",
+    "audio-play": "^2.1.0",
+    "is-absolute": "^0.2.6",
     "is-audio-buffer": "^1.0.1",
+    "is-relative": "^0.2.1",
     "request": "^2.74.0"
   },
   "devDependencies": {
     "audio-lena": "^1.1.0",
-    "audio-play": "audiojs/audio-play",
-    "browserify": "^13.0.1",
-    "mocha": "2",
     "prompt": "^1.0.0",
-    "uglifyjs": "^2.4.10",
-    "standard": "^8.1.0"
+    "tape": "^4.6.3"
   }
 }
