@@ -1,15 +1,14 @@
 {
   "name": "audio-loader",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "A flexible web audio sample loader for browser and node",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "scripts": {
-    "test": "npm run lint && mocha",
+    "test": "node test/node-test",
     "dist": "browserify lib/browser.js | uglifyjs > dist/audio-loader.min.js && ls -hall dist/",
-    "lint": "standard",
+    "lint": "eslint lib/*.js",
     "api": "jsdoc2md lib/index.js > API.md",
-    "prepublish": "npm test &&  npm run dist",
     "browser-example": "budo example/browser.js"
   },
   "repository": {
@@ -23,12 +22,10 @@
     "webaudio",
     "audiojs"
   ],
-  "standard": {
-    "ignore": [
-      "test/support/piano.js"
-    ]
-  },
   "author": "danigb <danigb@gmail.com>",
+  "contributors": [
+    "Dima Yv <df.creative@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/danigb/audio-loader/issues"
@@ -36,16 +33,13 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "audio-decode": "^1.2.0",
+    "is-absolute": "^0.2.6",
     "is-audio-buffer": "^1.0.1",
+    "is-relative": "^0.2.1",
     "request": "^2.74.0"
   },
   "devDependencies": {
     "audio-lena": "^1.1.0",
-    "audio-play": "audiojs/audio-play",
-    "browserify": "^14.3.0",
-    "mocha": "^3.2.0",
-    "prompt": "^1.0.0",
-    "uglifyjs": "^2.4.10",
-    "standard": "^10.0.1"
+    "tape": "^4.6.3"
   }
 }

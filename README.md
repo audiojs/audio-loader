@@ -1,8 +1,11 @@
-# audio-loader [![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
+# audio-loader
 
+[![Build Status](https://travis-ci.org/audiojs/audio-loader.svg?branch=master)](https://travis-ci.org/audiojs/audio-loader)
+[![Code Climate](https://codeclimate.com/github/audiojs/audio-loader/badges/gpa.svg)](https://codeclimate.com/github/audiojs/audio-loader)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+[![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 [![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-loader.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/danigb/audio-loader.svg?branch=master)](https://travis-ci.org/danigb/audio-loader) [![Code Climate](https://codeclimate.com/github/danigb/audio-loader/badges/gpa.svg)](https://codeclimate.com/github/danigb/audio-loader) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard) [![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
+[![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 
 An simple and flexible audio buffer loader for browser and node:
 
@@ -28,7 +31,8 @@ load({ snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
 - Compatible with midi.js pre-rendered soundfonts packages like [midi-js-soundfonts](https://github.com/gleitz/midi-js-soundfonts/tree/master/MusyngKite)
 - Compatible with json encoded audio like [sampled](https://github.com/danigb/sampled)
 
-## Install
+
+## Install
 
 __Npm__
 
