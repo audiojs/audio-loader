@@ -1,6 +1,6 @@
 {
   "name": "audio-loader",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "A flexible web audio sample loader for browser and node",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
@@ -23,7 +23,9 @@
     "audiojs"
   ],
   "author": "danigb <danigb@gmail.com>",
-  "contributors": ["Dima Yv <df.creative@gmail.com>"],
+  "contributors": [
+    "Dima Yv <df.creative@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/danigb/audio-loader/issues"
