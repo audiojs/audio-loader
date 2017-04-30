@@ -31,7 +31,7 @@
     "url": "https://github.com/danigb/audio-loader/issues"
   },
   "dependencies": {
-    "audio-context": "^0.1.0",
+    "audio-context": "^1.0.0",
     "audio-decode": "^1.2.0",
     "is-absolute": "^0.2.6",
     "is-audio-buffer": "^1.0.1",
