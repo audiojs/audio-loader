@@ -36,6 +36,8 @@
     "is-absolute": "^0.2.6",
     "is-audio-buffer": "^1.0.1",
     "is-relative": "^0.2.1",
+    "is-url": "^1.2.2",
+    "object-assign": "^4.1.1",
     "request": "^2.74.0"
   },
   "devDependencies": {
