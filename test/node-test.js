@@ -28,7 +28,7 @@ t('load mp3 files', function (t) {
 t('load absolute paths', function (t) {
   load(path.resolve('./example/samples/train.mp3')).then(testBuffer).then(() => t.end(), () => t.fail())
 })
-t.only('load remote files', function (t) {
-  load('https://ia802508.us.archive.org/5/items/testmp3testfile/mpthreetest.mp3', (e, data) => {console.log(e, data)})
-  //.then(testBuffer).then(() => t.end(), (e) => t.fail(e))
+t('load remote files', function (t) {
+  load('https://ia802508.us.archive.org/5/items/testmp3testfile/mpthreetest.mp3')
+  .then(testBuffer).then(() => t.end(), (e) => t.fail(e))
 })
