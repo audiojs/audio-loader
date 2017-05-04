@@ -1,6 +1,6 @@
 {
   "name": "audio-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A flexible web audio sample loader for browser and node",
   "main": "lib/index.js",
   "browser": "lib/browser.js",
