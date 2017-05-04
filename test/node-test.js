@@ -4,6 +4,7 @@ var isBuffer = require('is-audio-buffer')
 var load = require('..')
 var wavBuffer = require('audio-lena/wav')
 var mp3Buffer = require('audio-lena/mp3')
+var rawBuffer = require('audio-lena/buffer')
 var t = require('tape')
 var path = require('path')
 
@@ -21,6 +22,14 @@ t('load mp3 buffer', function (t) {
 })
 t('load wav files', function (t) {
   load('./example/samples/maeclave.wav').then(testBuffer).then(() => t.end(), () => t.fail())
+})
+t('should throw error', function (t) {
+  load(rawBuffer).then(testBuffer => {
+    t.fail()
+  }, e => {
+    t.ok(e)
+    t.end()
+  })
 })
 t('load mp3 files', function (t) {
   load('./example/samples/train.mp3').then(testBuffer).then(() => t.end(), () => t.fail())
