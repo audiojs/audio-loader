@@ -23,7 +23,7 @@ t('load mp3 buffer', function (t) {
 t('load wav files', function (t) {
   load('./example/samples/maeclave.wav').then(testBuffer).then(() => t.end(), () => t.fail())
 })
-t('should throw error', function (t) {
+t('should throw error on undecodable data', function (t) {
   load(rawBuffer).then(testBuffer => {
     t.fail()
   }, e => {
