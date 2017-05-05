@@ -44,12 +44,12 @@ __Yarn__
 
 __Browser__
 
-Download the [minified distribution](https://raw.githubusercontent.com/danigb/audio-loader/master/dist/audio-loader.min.js) (4kb) which exports `loadAudio` as window global:
+Download the [minified distribution](https://raw.githubusercontent.com/danigb/audio-loader/master/dist/audio-loader.min.js) which exports `loadAudio` as window global:
 
 ```html
 <script src="audio-loader.min.js"></script>
 <script>
-  loadAudio('file.wav').then(..)
+  loadAudio({ snare: 'snare.wav' }, { from: 'oramics.github.io/sampled/' }).then(..)
 </script>
 ```
 
