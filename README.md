@@ -7,7 +7,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-loader.svg)](https://greenkeeper.io/)
 [![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
 
-An simple and flexible audio buffer loader for browser and node:
+An simple and flexible audio buffer loader for browser **and node**:
 
 ```js
 var load = require('audio-loader')
@@ -36,7 +36,11 @@ load({ snare: 'samples/snare.wav', kick: 'samples/kick.wav' },
 
 __Npm__
 
-Via npm: `npm i --save audio-loader`
+`npm i --save audio-loader`
+
+__Yarn__
+
+`yarn add audio-loader`
 
 __Browser__
 
