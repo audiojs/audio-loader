@@ -140,7 +140,7 @@ To run the browser example:
 
 ```bash
 npm i -g budo
-npm run example-browser
+npm run browser-example
 ```
 
 To run the node (audiojs) example:
