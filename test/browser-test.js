@@ -58,6 +58,14 @@ describe('audio-loader@browser:', function () {
         assert.equal(data, 'wav data')
       })
     })
+    it('m4a', function () {
+      var opts = {
+        fetch: fetcher({ 'audio.m4a': 'aac data' }),
+        decode: utils.decode }
+      return load('audio.m4a', opts).then(function (data) {
+        assert.equal(data, 'aac data')
+      })
+    })
     it('options.from', function () {
       var opts = {
         fetch: fetcher({ 'server.com/audio.mp3': 'mp3 data' }),

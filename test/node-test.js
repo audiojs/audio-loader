@@ -34,6 +34,9 @@ t('should throw error on undecodable data', function (t) {
 t('load mp3 files', function (t) {
   load('./example/samples/train.mp3').then(testBuffer).then(() => t.end(), () => t.fail())
 })
+t('load m4a files', function (t) {
+  load('./example/samples/bassnote.m4a').then(testBuffer).then(() => t.end(), () => t.fail())
+})
 t('load absolute paths', function (t) {
   load(path.resolve('./example/samples/train.mp3')).then(testBuffer).then(() => t.end(), () => t.fail())
 })
