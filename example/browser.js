@@ -13,6 +13,9 @@ addExample("Load mp3 audio file", function() {
 addExample("Load ogg audio file", function() {
   load("example/samples/sound.ogg").then(playBuffer).catch(err);
 });
+addExample("Load m4a audio file", function() {
+  load("example/samples/bassnote.m4a").then(playBuffer).catch(err);
+});
 addExample("Load object with filenames", function() {
   load(
     { snare: "maesnare.wav", clave: "maeclave.wav" },
