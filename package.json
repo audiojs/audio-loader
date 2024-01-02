@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "A flexible web audio sample loader for browser and node",
   "main": "lib/index.js",
+  "types": "./dist/index.d.ts",
   "browser": "lib/browser.js",
   "scripts": {
     "test": "node test/node-test",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "audio-lena": "^1.1.0",
-    "tape": "^4.6.3"
+    "tape": "^4.6.3",
+    "typescript": "^5.3.3"
   }
 }
