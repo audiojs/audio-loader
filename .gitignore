@@ -2,3 +2,4 @@ node_modules/
 tmp/
 API.md
 npm-debug.log
+/.claude

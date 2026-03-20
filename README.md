@@ -1,11 +1,80 @@
 # audio-loader
 
-[![Build Status](https://travis-ci.org/audiojs/audio-loader.svg?branch=master)](https://travis-ci.org/audiojs/audio-loader)
-[![Code Climate](https://codeclimate.com/github/audiojs/audio-loader/badges/gpa.svg)](https://codeclimate.com/github/audiojs/audio-loader)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
-[![npm](https://img.shields.io/npm/v/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
-[![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-loader.svg)](https://greenkeeper.io/)
-[![license](https://img.shields.io/npm/l/audio-loader.svg)](https://www.npmjs.com/package/audio-loader)
+> **Deprecated.** The problem this package solved — fetching and decoding audio into AudioBuffers — is now handled natively by the platform. See [migration guide](#migration) below.
+
+---
+
+## Why deprecated?
+
+When audio-loader was created (2015), loading audio required juggling `XMLHttpRequest`, callback-based `decodeAudioData`, and Node.js `request`. In 2026, native `fetch()` and promise-based `decodeAudioData()` make this a two-liner:
+
+```js
+// Browser
+const buffer = await fetch(url).then(r => r.arrayBuffer())
+const audio = await audioContext.decodeAudioData(buffer)
+```
+
+```js
+// Node
+import { readFile } from 'fs/promises'
+import { decode } from 'audio-decode'
+
+const audio = await decode(await readFile('./sample.wav'))
+```
+
+This package also carries a deprecated dependency (`request`) and other outdated polyfills. Rather than rewrite what the platform now provides, we're archiving it.
+
+## Migration
+
+### Single file (browser)
+
+```js
+// before
+const buffer = await load('sample.mp3')
+
+// after
+const ac = new AudioContext()
+const buffer = await fetch('sample.mp3')
+  .then(r => r.arrayBuffer())
+  .then(buf => ac.decodeAudioData(buf))
+```
+
+### Batch loading
+
+```js
+// before
+const sounds = await load({ snare: 'snare.wav', kick: 'kick.wav' }, { from: baseUrl })
+
+// after
+const files = { snare: 'snare.wav', kick: 'kick.wav' }
+const ac = new AudioContext()
+const load = url => fetch(baseUrl + url).then(r => r.arrayBuffer()).then(buf => ac.decodeAudioData(buf))
+const sounds = Object.fromEntries(
+  await Promise.all(Object.entries(files).map(async ([k, v]) => [k, await load(v)]))
+)
+```
+
+### Node.js
+
+Use [audio-decode](https://github.com/nicktomlin/audio-decode) directly — it handles mp3, wav, ogg, m4a, flac, and aac.
+
+### MIDI.js soundfonts
+
+If you relied on the MIDI.js soundfont parser, here is the extraction (~10 lines):
+
+```js
+function parseMidiJsSoundfont(text) {
+  const begin = text.indexOf('MIDI.Soundfont.')
+  if (begin < 0) throw new Error('Invalid MIDI.js Soundfont format')
+  const eqPos = text.indexOf('=', begin) + 2
+  const end = text.lastIndexOf(',')
+  return JSON.parse(text.slice(eqPos, end) + '}')
+}
+```
+
+---
+
+## Original README
 
 An simple and flexible audio buffer loader for browser **and node**:
 
